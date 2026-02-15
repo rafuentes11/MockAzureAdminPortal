@@ -1,4 +1,4 @@
-import {useState} from'react';
+import { useState } from 'react';
 
 import './App.css'
 
@@ -16,21 +16,34 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [vms, setVMs] = useState([]);
+  const [resources, setResources] = useState([]);
+  const [resourceGroups, setResourceGroups] = useState([]);
+
+  const deleteUser = (indexToDelete) => {
+    setUsers(prev =>
+      prev.filter((user, index) => index !== indexToDelete)
+    );
+  };
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home />} />
 
-        <Route path="/manage-user" element={<ManageUser users={users}/>}/>
-        <Route path="/manage-vm" element={<ManageVM />}/>
-        <Route path="/manage-resource" element={<ManageResource />}/>
-        <Route path="/manage-resource-group" element={<ManageResourceGroup />}/>
-        
-        <Route path="/create-user" element={<CreateUser setUsers={setUsers} />}/>
-        <Route path="/create-vm" element={<CreateVM />}/>
-        <Route path="/create-resource" element={<CreateResource />}/>
-        <Route path="/create-resource-group" element={<CreateResourceGroup />}/>
+        <Route path="/manage-user" element=
+          {<ManageUser
+            users={users}
+            deleteUser={deleteUser}
+          />} />
+        <Route path="/manage-vm" element={<ManageVM vms={vms} />} />
+        <Route path="/manage-resource" element={<ManageResource resources={resources} />} />
+        <Route path="/manage-resource-group" element={<ManageResourceGroup resourceGroups={resourceGroups} />} />
+
+        <Route path="/create-user" element={<CreateUser setUsers={setUsers} />} />
+        <Route path="/create-vm" element={<CreateVM setVMs={setVMs} />} />
+        <Route path="/create-resource" element={<CreateResource setResources={setResources} />} />
+        <Route path="/create-resource-group" element={<CreateResourceGroup setResourceGroups={setResourceGroups} />} />
       </Routes>
     </Router>
   );

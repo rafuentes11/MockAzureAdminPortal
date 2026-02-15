@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
-function ManageUser({users}) {
-    
-    
+function ManageUser({ users, deleteUser }) {
 
     return (
         <>
@@ -10,8 +8,8 @@ function ManageUser({users}) {
             <p><Link to="/"><button>Home Dashboard</button></Link></p>
             <p><Link to="/create-user"><button>Create User</button></Link></p>
             {users.length === 0 ? (
-                <p> </p>
-            ) :(
+                <p>No Users Created</p>
+            ) : (
                 <table>
                     <thead>
                         <tr>
@@ -20,16 +18,20 @@ function ManageUser({users}) {
                             <th>Display Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Created Date & Time</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user,index) =>(
-                            <tr key = {index}>
+                        {users.map((user, index) => (
+                            <tr key={index}>
                                 <td>{user.firstName}</td>
                                 <td>{user.lastName}</td>
                                 <td>{user.displayName}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
+                                <td>{user.createdAt}</td>
+
+                                <td><button onClick={() => deleteUser(index)}>Delete</button></td>
                             </tr>
                         ))}
                     </tbody>
