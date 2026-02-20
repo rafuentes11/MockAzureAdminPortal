@@ -26,6 +26,12 @@ function App() {
     );
   };
 
+  const deleteVM = (indexToDelete) => {
+    setVMs(prev =>
+      prev.filter((vm, index) => index !== indexToDelete)
+    );
+  };
+
   return (
     <Router>
       <Routes>
@@ -36,7 +42,7 @@ function App() {
             users={users}
             deleteUser={deleteUser}
           />} />
-        <Route path="/manage-vm" element={<ManageVM vms={vms} />} />
+        <Route path="/manage-vm" element={<ManageVM vms={vms} setVMs={setVMs} deleteVM={deleteVM}/>} />
         <Route path="/manage-resource" element={<ManageResource resources={resources} />} />
         <Route path="/manage-resource-group" element={<ManageResourceGroup resourceGroups={resourceGroups} />} />
 

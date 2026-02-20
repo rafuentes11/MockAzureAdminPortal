@@ -36,8 +36,7 @@ function ManageUser({ users, deleteUser }) {
                         ))}
                     </tbody>
                 </table>
-            )
-            }
+            )}
         </>
     );
 }

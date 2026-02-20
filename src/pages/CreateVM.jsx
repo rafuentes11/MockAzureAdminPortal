@@ -28,8 +28,26 @@ function CreateVM({ setVMs }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(vmData);
-        setVMs(prev => [...prev, vmData]);
+        const selectedSize = sizes[vmData.size];
+        const newData = {
+            id: Date.now(),
+            ...vmData,
+            status: "Running",
+            size: selectedSize
+        };
+        setVMs(prev => [...prev, newData]);
+
+        setTimeout(() => {
+
+            setVMs(prev =>
+                prev.map(vm =>
+                    vm.id === newData.id && vm.status === "Running"
+                        ? { ...vm, status: "Online" } : vm
+                )
+            );
+        }, 5000);
+        console.log(newData);
+
         navigate("/manage-vm");
     }
 
@@ -37,6 +55,7 @@ function CreateVM({ setVMs }) {
         <>
             <h1>Create VMs</h1>
             <p><Link to="/"><button>Home Dashboard</button></Link></p>
+            <p><Link to="/manage-vm"><button>Manage VMs</button></Link></p>
             <div className="createVMForm">
                 <form onSubmit={handleSubmit}>
                     <section>
@@ -78,7 +97,7 @@ function CreateVM({ setVMs }) {
                         >
                             <option>Select Size</option>
                             {sizes.map((size, index) => (
-                                <option key={index} value={`${size.cpu}-${size.ram}`}>
+                                <option key={index} value={index}>
                                     {size.cpu} CPU / {size.ram} GB RAM
                                 </option>
                             ))}
